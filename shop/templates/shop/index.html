@@ -1,0 +1,159 @@
+{% extends 'shop/base.html' %}
+{% block css %}
+<style>
+    .col-md-3 {
+        display: inline-block;
+        margin-left: -4px;
+    }
+
+    .carousel-indicators .active {
+        background-color: blue;
+    }
+
+    .col-md-3 img {
+
+        width: 170px;
+        height: 200px;
+    }
+
+    body .carousel-indicator li {
+        background-color: blue;
+    }
+
+    body .carousel-indicators {
+        bottom: 0;
+    }
+
+    body .carousel-control-prev-icon,
+    body .carousel-control-next-icon {
+        background-color: blue;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        top: auto;
+        bottom: auto;
+        padding-top: 222px;
+    }
+
+    body .no-padding {
+        padding-left: 0;
+        padding-right: 0;
+    }
+</style>
+{% endblock css %}
+
+{% block body %}
+{% load static %}
+<div class="container-fluid d-flex justify-content-center flex-wrap">
+    <div class="col-md-3 p-4">
+        <form method="get">
+            <div class="form-group">
+                <label for="category">Select Category:</label>
+                <select name="category" id="category" class="form-control">
+                    <option value="">All Categories</option>
+                    {% for category in categories %}
+                    <option value="{{ category.category }}">{{ category.category }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="sort_by_price">Sort by Price:</label>
+                <select name="sort_by_price" id="sort_by_price" class="form-control">
+                    <option value="">None</option>
+                    <option value="asc">Low to High</option>
+                    <option value="desc">High to Low</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="sort_by_arrival">Arrival Time:</label>
+                <select name="sort_by_arrival" id="sort_by_arrival" class="form-control">
+                    <option value="">None</option>
+                    <option value="old">Oldest</option>
+                    <option value="new">Newest</option>
+                </select>
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+                <button type="submit" class="btn btn-primary">Apply Filters</button>
+                <a href="{% url 'shop:ShopHome' %}" class="btn btn-danger">Reset Filters</a>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-9 p-4">
+        {% for product, range, nSlides in allProds %}
+        <h5 class="my-4">Flash Sale On {{ product.0.category }} - Recommended Items</h5>
+        <div class="row">
+            <div id="demo{{ forloop.counter }}" class="col carousel slide my-3" data-ride="carousel">
+                <ul class="carousel-indicators">
+                    <li data-target="#demo{{ forloop.counter }}" data-slide-to="0" class="active"></li>
+
+                    {% for i in range %}
+                    <li data-target="#demo{{ forloop.parentloop.counter }}" data-slide-to="{{ i }}"></li>
+                    {% endfor %}
+                </ul>
+
+
+                <div class="container carousel-inner d-flex justify-content-between">
+
+                    <div class="carousel-item active p-4">
+
+
+                        {% for i in product %}
+                        <div class="col-md-3 m-4">
+                            <div class="card" style="width: 18rem;">
+                                <div class="d-flex justify-content-center">
+                                    <img src='/media/{{ i.image }}' class="card-img-top" alt="...">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title" id="namepr{{ i.id }}">{{ i.product_name }}</h5>
+                                    <h6 class="card-title">Price : <span id="pricepr{{i.id}}">{{i.price}}</span></h6>
+                                    <p class="card-text">{{ i.desc }}</p>
+                                    <div class="d-flex justify-content-between">
+                                        <span id="divpr{{ i.id }}" class="divpr">
+                                            <button id="pr{{ i.id }}" class="btn btn-primary cart">Add To Cart</button>
+                                        </span>
+                                        <a href="/shop/products/{{ i.id }}">
+                                            <button id="qv{{ i.id }}" class="btn btn-primary cart">Quick View
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% if forloop.counter|divisibleby:3 and forloop.counter > 0 and not forloop.last %}
+                    </div>
+                    <div class="carousel-item">
+                        {% endif %}
+
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#demo{{ forloop.counter }}" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a class="carousel-control-next" href="#demo{{ forloop.counter }}" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock body %}
+
+{% block js %}
+<script>
+    function clearCart() {
+        cart = JSON.parse(localStorage.getItem('cart'));
+        for (var item in cart) {
+            document.getElementById('div' + item).innerHTML = '<button id="' + item + '" class="btn btn-primary cart">Add To Cart</button>';
+        }
+        localStorage.clear();
+        cart = {};
+        updateCart(cart);
+    }
+</script>
+{% endblock js %}

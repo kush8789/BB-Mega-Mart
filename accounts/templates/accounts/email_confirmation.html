@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ campaign.subject }}</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #d5d5d5;
+        }
+
+        h1 {
+            color: #333333;
+        }
+
+        p {
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        a {
+            color: #337ab7;
+            text-decoration: none;
+        }
+
+
+        button {
+            border: 0;
+            border-radius: 2px;
+            font-size: large
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <span>Hello, {{username}}</span>
+        <p>Thankyou for using BB Mega-Mart. Please activate your account.</p>
+        <p>
+            To activate
+            <button><a href="http://{{domain}}{% url 'account:activate' uidb64=uid token=token %}">Click here</a></button>
+        </p>
+
+    </div>
+</body>
+
+</html>

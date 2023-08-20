@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css" rel="stylesheet" />
+
+    <title>{% block title %} {% endblock title %}</title>
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .custom-button {
+            color: aliceblue !important;
+        }
+
+        footer {
+            margin-top: auto;
+        }
+
+        .navbar .navbar-toggler[aria-expanded="true"] {
+            color: #9933CC !important;
+        }
+
+        .navbar .navbar-toggler:focus {
+            color: #ff4444;
+        }
+    </style>
+    
+    {% block css %}
+        
+    {% endblock css %}
+        
+</head>
+
+<body class="fl-page">
+    <div class="p-3 text-center bg-white border-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 d-flex justify-content-center justify-content-md-start mb-3 mb-md-0">
+                    <a class="navbar-brand" href="/shop">BB Mega-Mart</a>
+                </div>
+
+                <div class="col-md-4">
+                    <form method='get' action='/shop/search/' class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+                            name="search" id="search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </div>
+                <div class="col-md-4 d-flex justify-content-center justify-content-md-end align-items-center">
+                    <div class="d-flex">
+                        {% if request.user.is_authenticated %}
+                        <a class="nav-link active btn btn btn-danger p-2 me-2"
+                            href="{% url 'accounts:logout' %}">Logout</a>
+                        {% else %}
+                        <a class="nav-link active btn btn-primary p-2 me-2"
+                            href="{% url 'accounts:signup' %}">Signup</a>
+                        <a class="nav-link active btn btn-success p-2 me-2" href="{% url 'accounts:login' %}">Login</a>
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- Right elements -->
+            </div>
+        </div>
+    </div>
+    <!-- Jumbotron -->
+
+    <!-- Navbar -->
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+
+        <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+            <!-- <span class="navbar-toggler-icon custom-button"></span> -->
+            X
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/shop">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/shop/about">About Us</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/shop/tracker">Tracker</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/blog">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/shop/contact">Contact Us</a>
+                </li>
+
+
+            </ul>
+            <button type="button" class="btn btn-secondary mx-2" id="popcart" data-container="body"
+                data-toggle="popover365800" data-placement="bottom" data-html="true" data-content="Nothing in the cart">
+                Cart(<span id="cart">0</span>)
+            </button>
+        </div>
+    </nav>
+
+    {% block body %} {% endblock body %}
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+
+    <footer class="footer mt-auto p-2 bg-primary" data-bs-theme="dark">
+        <h3 class="text-center">Connect with us</h3>
+        <!-- <div class="container"> -->
+        <!-- <div class="row"> -->
+
+
+        <div class="container">
+            <div class=" flex d-flex justify-content-between">
+
+
+                <a class="btn btn-social-icon btn-linkedin" href="https://www.linkedin.com/">
+                    <i class="fa-brands fa-linkedin bg-primary fa-3x"></i>
+                </a>
+
+                <a class="btn btn-social-icon btn-github" class="text-decoration-none" href="https://github.com/"
+                    target="_blank">
+                    <i class="fab fa-github fa-3x"></i>
+                </a>
+                <a class="btn btn-social-icon btn-linkedin" href="https://twitter.com/" target="_blank">
+                    <i class="fab fa-twitter fa-3x"></i>
+                </a>
+                <a class="btn btn-social-icon btn-linkedin" href="https://www.instagram.com/" target="_blank">
+                    <i class="fab fa-instagram fa-3x"></i>
+                </a>
+
+            </div>
+        </div>
+    </footer>
+
+    {% block js %}
+     {% endblock js %}
+
+     <script>
+        console.log('working');
+        $('#popcart').popover('show');
+        cart = JSON.parse(localStorage.getItem('cart'));
+        updatePopover(cart);
+
+        if (localStorage.getItem('cart') == null) {
+            var cart = {};
+        } else {
+            cart = JSON.parse(localStorage.getItem('cart'));
+            document.getElementById('cart').innerHTML = Object.keys(cart).length;
+            //updateCart(cart);
+            var total = 0;
+            for (i = 0; i < Object.keys(cart).length; i++) {
+                total += Object.values(cart)[i][0];
+            }
+            document.getElementById('cart').innerHTML = total;
+        }
+        $('.divpr').on('click', 'button.cart', function () {
+            console.log('clicked');
+            var idstr = this.id.toString();
+            console.log(idstr);
+            if (cart[idstr] != undefined) {
+                cart[idstr][0] = cart[idstr][0] + 1;
+            } else {
+                qty = 1;
+                name = document.getElementById('name' + idstr).innerHTML;
+                price = document.getElementById('price' + idstr).innerHTML;
+                console.log(price);
+                cart[idstr] = [qty, name, price];
+                console.log(cart);
+            }
+            updateCart(cart);
+            console.log(cart);
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            var total = 0;
+            for (i = 0; i < Object.keys(cart).length; i++) {
+                total += Object.values(cart)[i][0];
+            }
+            document.getElementById('cart').innerHTML = total;
+        });
+
+
+        function updateCart(cart) {
+
+            for (var item in cart) {
+                document.getElementById('div' + item).innerHTML = "<button id='minus" + item + "' class='btn btn-primary minus'>-</button> <span id='val" + item + "''>" + cart[item][0] + "</span> <button id='plus" + item + "' class='btn btn-primary plus'> + </button>";
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            document.getElementById('cart').innerHTML = Object.keys(cart).length;
+            console.log(cart);
+            var total = 0;
+            for (i = 0; i < Object.keys(cart).length; i++) {
+                total += Object.values(cart)[i][0];
+            }
+            document.getElementById('cart').innerHTML = total;
+            updatePopover(cart);
+        }
+
+
+        $('.divpr').on("click", "button.minus", function () {
+            a = this.id.slice(7,);
+            cart['pr' + a][0] = cart['pr' + a][0] - 1;
+            cart['pr' + a][0] = Math.max(0, cart['pr' + a][0]);
+            document.getElementById('valpr' + a).innerHtml = cart['pr' + a][0];
+            updateCart(cart);
+        });
+
+        $('.divpr').on("click", "button.plus", function () {
+            a = this.id.slice(6,);
+            cart['pr' + a][0] = cart['pr' + a][0] + 1;
+            document.getElementById('valpr' + a).innerHTML = cart['pr' + a][0];
+            updateCart(cart);
+        });
+
+        function updatePopover(cart) {
+
+            var popStr = "";
+            popStr = popStr + "<h5> Cart for your items in my shopping cart </h5><div class='mx-2 my-2'>";
+            var i = 1;
+            for (var item in cart) {
+                popStr = popStr + "<b>" + i + "</b>. ";
+                popStr = popStr + cart[item][1].slice(0,19) + "... Qty: " + cart[item][0] + '<br>';
+                i = i + 1;
+            }
+            popStr = popStr + "</div> <a href='/shop/checkout'><button class='btn btn-primary' id ='checkout'>Checkout</button></a> <button class='btn btn-primary' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
+            document.getElementById('popcart').setAttribute('data-content', popStr);
+            $('#popcart').popover('show');
+        }
+    </script>
+</body>
+
+</html>
