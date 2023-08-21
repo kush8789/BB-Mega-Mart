@@ -1,9 +1,3 @@
-from django.shortcuts import render
-
-# Create your views here.
-from django.shortcuts import render
-
-# Create your views here.
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -20,11 +14,12 @@ from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.contrib import messages
 from .tokens import account_activation_token
+import threading
 
 
 def login_user(request):
     if request.user.is_authenticated:
-        return redirect("home:home")
+        return redirect("shop:ShopHome")
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
@@ -32,7 +27,7 @@ def login_user(request):
 
         if user is not None:
             login(request, user)
-            return redirect("Home")
+            return redirect("shop:ShopHome")
         else:
             messages.error(
                 request,
@@ -45,14 +40,14 @@ def login_user(request):
 def logout_user(request):
     if request.user.is_authenticated:
         logout(request)
-        return redirect("Home")
-    return redirect("Home")
+        return redirect("shop:ShopHome")
+    return redirect("shop:ShopHome")
 
 
 def create_user(request):
     # If loggedin->Home
     if request.user.is_authenticated:
-        return redirect("Home")
+        return redirect("shop:ShopHome")
     ## If register form submitted
     if request.method == "POST":
         form = SignupForm(request.POST)
@@ -89,7 +84,6 @@ def create_user(request):
                     "Successfully registered, Please check your registered mail and verify",
                     extra_tags="alert alert-success alert-dismissible fade show",
                 )
-      
 
                 try:
                     email_subject = "Confirm your email"
@@ -98,7 +92,7 @@ def create_user(request):
                     current_site = get_current_site(request)
                     # Render HTML content from a template
                     html_content = render_to_string(
-                        "email_confirmation.html",
+                        "accounts/email_confirmation.html",
                         {
                             "username": username,
                             "domain": current_site.domain,
@@ -142,7 +136,7 @@ def activate(request, uidb64, token):
         myuser.is_active = True
         myuser.save()
         login(request, myuser)
-        return redirect("Home")
+        return redirect("shop:ShopHome")
     else:
         messages.error(
             request,
@@ -150,6 +144,3 @@ def activate(request, uidb64, token):
             extra_tags="alert alert-warning alert-dismissible fade show",
         )
         return redirect(request, "accounts:signup")
-
-
-

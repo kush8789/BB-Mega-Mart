@@ -11,6 +11,20 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os.path
 from pathlib import Path
+import os
+
+# EMAIL_BACKEND = EMAIL_BACKEND
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_USE_TLS = EMAIL_USE_TLS
+EMAIL_USE_TLS = True
+# EMAIL_HOST = EMAIL_HOST
+EMAIL_HOST = "smtp.gmail.com"
+# EMAIL_HOST_USER = EMAIL_HOST_USER
+EMAIL_HOST_USER = "baranwalkush@gmail.com"
+# EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
+EMAIL_HOST_PASSWORD = "NULL"
+# EMAIL_PORT = EMAIL_PORT
+EMAIL_PORT = 587
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +39,7 @@ SECRET_KEY = "django-insecure-nnghn=f%zxic)_)=$km_=iae31qy%o=k_3d0yhh%6^e#t^dj2+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,8 +51,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'blog',
     "accounts",
+    "blog",
     "shop",
 ]
 
@@ -57,7 +71,7 @@ ROOT_URLCONF = "bbmegamart.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": ['bbmegamart/templates'],
+        "DIRS": ["bbmegamart/templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -118,8 +132,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = '/static/'
-MEDIA_ROOT = os.path.join(BASE_DIR,"media")
+STATIC_URL = "/static/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
